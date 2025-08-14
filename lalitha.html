@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Automatic Doors</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #333;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      color: white;
+    }
+
+    .door-container {
+      width: 300px;
+      height: 200px;
+      position: relative;
+      perspective: 800px;
+      border: 2px solid #555;
+      background-color: #222;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .door {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background-color: #654321;
+      top: 0;
+      transition: transform 2s ease;
+      box-shadow: inset 0 0 10px #000000aa;
+      border: 2px solid #432a0f;
+      border-radius: 0 0 10px 0;
+      transform-origin: left center;
+    }
+
+    .door.right {
+      right: 0;
+      left: auto;
+      border-radius: 0 0 0 10px;
+      transform-origin: right center;
+    }
+
+    /* Doors open by rotating outward */
+    .open .door.left {
+      transform: rotateY(-90deg);
+    }
+
+    .open .door.right {
+      transform: rotateY(90deg);
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="door-container" id="doorContainer">
+    <div class="door left"></div>
+    <div class="door right"></div>
+  </div>
+  <div class="status" id="statusText">Doors are Closed</div>
+
+  <script>
+    const doorContainer = document.getElementById('doorContainer');
+    const statusText = document.getElementById('statusText');
+
+    let doorsOpen = false;
+
+    function toggleDoors() {
+      doorsOpen = !doorsOpen;
+      if (doorsOpen) {
+        doorContainer.classList.add('open');
+        statusText.textContent = "Doors are Open";
+      } else {
+        doorContainer.classList.remove('open');
+        statusText.textContent = "Doors are Closed";
+      }
+    }
+
+    // Initially closed, open after 3 seconds
+    setTimeout(() => {
+      toggleDoors();
+    }, 3000);
+
+    // Then toggle every 5 seconds (open/close cycle)
+    setInterval(() => {
+      toggleDoors();
+    }, 5000);
+  </script>
+
+</body>
+</html>
